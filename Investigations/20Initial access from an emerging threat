@@ -1,0 +1,50 @@
+2025-11-26 - Alert Investigation (MDE) - Initial access from an emerging threat
+
+**Summary of Findings
+
+A malicious domain was masked with a reputable wesbite CloudFare, leading to a series of suspicious events on mts-contractorpc1. Upon clicking the link, Explorer.EXE spawned a LOLBIN,  msiexec.exe to contact the malicious domain, shift-art[.]com over port 443, leading to a series of events, including registry key modification and NamedPipeEvent. 
+There are no evidence of data exfiltration, credential theft, Lateral movement or any futher compromise  between 2025-11-26 21:25:35 (UTC)  and 2025-11-26 21:25:36 (UTC) (1 second). No additional payloads were dropped as well during this time window.
+
+# **Who, What, When, Where, Why, How**
+
+## WHO
+
+Unknown threat actor using a malicious domain -  shift-art[.]com - created 1,056 days ago (2023-01-17 17:29:07(UTC)), so most likely not a targeted.
+
+## WHAT
+
+Explorer.EXE Explorer spawned LOLBIN msiexec.exe which connects to a malicios domain shift-art[.]com  and IP Address 37[.]140[.]192[.]197 in moskva, Russia. 
+
+## WHEN
+
+2025-11-26 21:25:35 (UTC) - 2025-11-26 21:25:36 (UTC). Duration - 1 second
+
+## WHERE
+
+mts-contractorpc1 only
+
+## WHY
+
+Identity verification through Cloudfare - a trusted third party website, with embedded link to a malicious domain and IP
+
+## HOW
+
+User tried verifying identity through a reputable website, Cloudflare, and this spawned msiexec.exe to connect to the malicious domain and IP. Modifications to registry key were observed. Two events -  NamedPipeEvent and ProcessPrimaryTokenModified - were also observed during msiexec.exe execution.
+
+# Impact Assessment
+
+- Registry value “RunMRU” modified.
+
+# Recommendation
+
+## Short Term
+
+- Block malicious domain shift-art[.]com and IP 37[.]140[.]192[.]197, if no impact on business continuation.
+- Check for connections to malicious IP and domain from other hosts within the network
+- Review any msiexe.exec processes across all hosts.
+
+## Medium Term
+
+## Long Term
+
+- Review and implement the principle of least priviledge
